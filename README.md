@@ -1,63 +1,132 @@
-# Unity OpenXR VR Video Viewer
+# TapLive XR - Unity OpenXR Video Viewer Platform
 
-This project is a 360/180/2D VR Video Viewer built with Unity and OpenXR.
+A production-ready XR platform for immersive video viewing and order management, built with Unity and OpenXR.
 
-## Prerequisites
+## 🎯 Overview
+TapLive XR is a comprehensive VR application that combines:
+- **360°/180°/2D video playback** with full controller support
+- **Real-time order management** with 3D spatial visualization  
+- **Network integration** ready for API, WebSocket, and WebRTC
+- **Scalable architecture** with proper namespacing and modularity
 
-- **Unity Hub**: Installed.
-- **Unity Editor**: Recommended version 2021.3 LTS or 2022.3 LTS. Ensure **Android Build Support** (with OpenJDK & SDK) and **Windows Build Support** are installed.
+## 📁 Project Structure
+```
+Assets/
+├── _Project/
+│   ├── Scenes/              # Bootstrap, XRViewer, DebugRoom
+│   ├── Scripts/
+│   │   ├── Core/            # AppManager, XRManager, NetworkManager
+│   │   ├── XR/              # Input, Camera Rig, UI Binder, Video
+│   │   ├── Network/         # API, WebSocket, WebRTC clients
+│   │   ├── Orders/          # Order models and management
+│   │   ├── UI/              # HUD, Panels, Buttons
+│   │   └── Utils/           # JSON, Logging utilities
+│   ├── Prefabs/Materials/Models/Textures/Videos/Audio/
+├── ThirdParty/              # External packages
+└── StreamingAssets/         # Configuration files
 
-## Project Setup Guide
+Docs/                        # Comprehensive setup guides
+```
 
-### 1. Create a New Project
-1. Open Unity Hub.
-2. Click **New Project**.
-3. Select **3D (URP)** or **3D (Core)**. URP is recommended for better performance on standalone headsets.
-4. Name your project (e.g., `VRVideoViewer`) and create it.
+## 🚀 Quick Start
 
-### 2. Install OpenXR Plugin
-1. In Unity, go to **Window > Package Manager**.
-2. Click the `+` icon in the top left or ensure "Packages: Unity Registry" is selected.
-3. Search for **OpenXR Plugin** and click **Install**.
-4. If prompted to enable the new Input System, click **Yes** and let the editor restart.
+### Prerequisites
+- **Unity Hub** with Unity 2021.3 LTS or newer
+- **Android Build Support** (for Quest) or **Windows Build Support** (for PCVR)
+- **Meta Quest** headset or compatible OpenXR device
 
-### 3. Configure XR Plug-in Management
-1. Go to **Edit > Project Settings > XR Plug-in Management**.
-2. **PC Tab**: Check **OpenXR**.
-3. **Android Tab**: Check **OpenXR**.
-   - Under **OpenXR > Interaction Profiles**, add **Oculus Touch Controller Profile** (or others as needed, e.g., HTC Vive, Valve Index).
-   - Resolve any warnings/errors that appear in the validation check (yellow/red icons).
+### Installation
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/taplivenetwork/taplive-xr.git
+   cd taplive-xr
+   ```
 
-### 4. Scene Setup
-1. Open your main scene (e.g., `SampleScene`).
-2. Delete the default **Main Camera**.
-3. Right-click in Hierarchy > **XR > XR Origin (VR)**. (If you don't see this, install the **XR Interaction Toolkit** from Package Manager > Unity Registry, or just create a Game Object with a Camera and "Tracked Pose Driver").
-   - *Note: Using XR Interaction Toolkit is the easiest way.*
-4. **Video Sphere**:
-   - Create a **3D Object > Sphere**.
-   - Scale it to `(-100, 100, 100)` (Negative scale flips normals so you see it from inside).
-   - Set its Position to `(0, 0, 0)`.
-   - Remove the **Sphere Collider** (optional, prevents raycast blocks).
-   - Create a new Material (Right-click Project > Create > Material), set Shader to **Universal Render Pipeline/Unlit** (or Standard > Unlit/Texture), and assign it to the Sphere.
-5. **Video Player**:
-   - Add a **Video Player** component to the Sphere.
-   - Set **Source** to URL or Video Clip.
-   - Set **Render Mode** to **Material Override** (specifically `BaseMap` or `_MainTex`).
-   - Drag your video file into `Assets` and assign it, or use a URL.
+2. **Follow the setup guides** (in order):
+   - [Unity Setup](Docs/setup_unity.md)
+   - [OpenXR Configuration](Docs/setup_openxr.md)
+   - [Scene Setup](Docs/scene_setup.md)
 
-### 5. Scripts Setup
-1. Copy the provided scripts (`VideoController.cs`, `VRInputHandler.cs`) into `Assets/Scripts/`.
-2. Attach `VideoController` to the **Sphere** (or wherever the Video Player is).
-3. Attach `VRInputHandler` to the **XR Origin** or a functional Manager object.
-4. Link the `VideoController` reference in the `VRInputHandler` inspector.
-5. Map your inputs (if using Input System, create an Input Action Asset or use direct button references).
+3. **Test with mock data** before connecting to live APIs
 
-## Usage
-- **Play/Pause**: Press the designated Trigger/Button `(A)`.
-- **Seek**: Use the Joystick (Left/Right).
-- **Recenter**: System default or implemented via `(B)` button.
+## 📚 Documentation
+Comprehensive guides in [`/Docs`](Docs/):
+- **[setup_unity.md](Docs/setup_unity.md)** - Unity installation and project import
+- **[setup_openxr.md](Docs/setup_openxr.md)** - OpenXR plugin configuration
+- **[scene_setup.md](Docs/scene_setup.md)** - Scene creation walkthrough
+- **[api_integration.md](Docs/api_integration.md)** - API/WebSocket/WebRTC integration
+- **[build_meta_quest.md](Docs/build_meta_quest.md)** - Meta Quest deployment
 
-## Troubleshooting
-- **Black Screen**: Check if the video URL is valid or if the codec is supported on the target platform (H.264/H.265 usually work best for Android XR).
-- **Inverted Video**: Ensure the Sphere scale is negative (`-100, 100, 100`).
+## 🎮 Usage
+- **Play/Pause**: Press Trigger or `A` button
+- **Seek**: Use Joystick (Left/Right) or arrow keys (debug)
+- **Menu**: Press `B` button or `Escape` (debug)
+
+## 🔧 Configuration
+Edit `Assets/StreamingAssets/app_config.json`:
+```json
+{
+  "apiBaseUrl": "https://your-api.com",
+  "webSocketUrl": "wss://your-socket.com",
+  "enableDebugMode": true
+}
+```
+
+## 🏗️ Architecture
+
+### Core Systems
+- **AppManager** - Central initialization and config loading
+- **XRManager** - XR session lifecycle management
+- **NetworkManager** - Coordinates all network clients
+
+### Namespaces
+- `TapLive.Core.*` - Core management systems
+- `TapLive.XR.*` - XR interactions and video playback
+- `TapLive.Network.*` - API, WebSocket, WebRTC clients
+- `TapLive.Orders.*` - Order data and visualization
+- `TapLive.UI.*` - HUD, panels, interactive buttons
+- `TapLive.Utils.*` - JSON serialization, logging
+
+## 🌐 Network Integration
+
+### REST API
+Functional `ApiClient` for orders and data fetching.
+
+### WebSocket (Stub)
+Requires external library:
+- **NativeWebSocket** (WebGL) or **WebSocketSharp** (Desktop/Mobile)
+- See [api_integration.md](Docs/api_integration.md) for setup
+
+### WebRTC (Stub)
+Requires Unity WebRTC package:
+```
+com.unity.webrtc
+```
+
+## 📦 Dependencies
+- Unity 2021.3 LTS or newer (2022.3 LTS recommended)
+- OpenXR Plugin (`com.unity.xr.openxr`)
+- XR Interaction Toolkit (recommended)
+- TextMeshPro (for UI components)
+
+## 🛡️ Governance & Security
+- [CODE_OWNERS](CODEOWNERS) - Repository ownership
+- [GOVERNANCE](GOVERNANCE.md) - Roles and decision-making
+- [SECURITY](SECURITY.md) - Security policy and reporting
+- [CONTRIBUTING](CONTRIBUTING.md) - Contribution guidelines
+- [GEMINI_STRATEGY](GEMINI_STRATEGY.md) - AI integration strategy
+
+## 📝 License
+See [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+We welcome contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## 📧 Support
+For issues or questions, please open a GitHub issue or contact the maintainers.
+
+---
+
+**Built with ❤️ by the TapLive Network team**
+
 
