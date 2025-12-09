@@ -31,7 +31,7 @@ Docs/                        # Comprehensive setup guides
 ## 🚀 Quick Start
 
 ### Prerequisites
-- **Unity Hub** with Unity 2021.3 LTS or newer
+- **Unity Hub** with Unity 6 (6000.0+) or Unity 2022.3 LTS minimum
 - **Android Build Support** (for Quest) or **Windows Build Support** (for PCVR)
 - **Meta Quest** headset or compatible OpenXR device
 
@@ -104,7 +104,7 @@ com.unity.webrtc
 ```
 
 ## 📦 Dependencies
-- Unity 2021.3 LTS or newer (2022.3 LTS recommended)
+- Unity 6 (6000.0+) recommended, or Unity 2022.3 LTS minimum
 - OpenXR Plugin (`com.unity.xr.openxr`)
 - XR Interaction Toolkit (recommended)
 - TextMeshPro (for UI components)

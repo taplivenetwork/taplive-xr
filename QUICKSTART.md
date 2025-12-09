@@ -4,7 +4,7 @@
 
 ### Phase 1: Unity Setup (5-10 minutes)
 1. **Install Unity Hub** from https://unity.com/download
-2. **Install Unity 2022.3 LTS** with:
+2. **Install Unity 6 (6000.0 or newer)** with:
    - Android Build Support (for Quest)
    - Windows Build Support (for PCVR)
 3. **Open this project** in Unity Hub:

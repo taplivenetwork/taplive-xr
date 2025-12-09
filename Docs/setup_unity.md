@@ -2,7 +2,7 @@
 
 ## Prerequisites
 - **Unity Hub**: Latest version installed
-- **Unity Editor**: 2021.3 LTS or newer (2022.3 LTS recommended)
+- **Unity Editor**: Unity 6 (6000.0 or newer) recommended, or 2022.3 LTS minimum
 - **Build Support**: 
   - Android Build Support (OpenJDK & Android SDK)
   - Windows Build Support (if targeting PCVR)
@@ -14,7 +14,7 @@
 2. Open Unity Hub
 3. Navigate to **Installs** tab
 4. Click **Install Editor**
-5. Select **2022.3 LTS (recommended)**
+5. Select **Unity 6 (6000.0 or newer)** - the latest release
 6. In the installation options, ensure the following are checked:
    - **Android Build Support** (with OpenJDK and Android SDK)
    - **Windows Build Support**
